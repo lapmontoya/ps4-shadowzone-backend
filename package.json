@@ -2,9 +2,9 @@
   "name": "ps4-shadowzone-backend",
   "version": "1.0.0",
   "description": "Backend para el contador de descargas de PS4 Shadow Zone",
-  "main": "server.js",
+  "main": "servidor.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node servidor.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
