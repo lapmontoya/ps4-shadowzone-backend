@@ -1,19 +1,16 @@
-const fs = require('fs');
-const path = require('path');
+const express = require('express');
+const cors = require('cors');
 
-// Ruta GET para devolver el archivo juegos.json
-app.get('/juegos', (req, res) => {
-  const archivoPath = path.join(__dirname, 'juegos.json');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-  fs.readFile(archivoPath, 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).json({ error: 'No se pudo leer el archivo juegos.json' });
-    }
-    try {
-      const juegos = JSON.parse(data);
-      res.json(juegos);
-    } catch (parseErr) {
-      res.status(500).json({ error: 'Error al parsear juegos.json' });
-    }
-  });
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('PS4 Shadowzone Backend funcionando correctamente.');
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
