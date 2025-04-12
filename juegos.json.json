@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "titulo": "God of War",
+    "genero": "Acción",
+    "descripcion": "Kratos se embarca en una aventura épica con su hijo Atreus en tierras nórdicas.",
+    "imagen": "https://example.com/imagenes/god-of-war.jpg",
+    "descargas": 1240
+  },
+  {
+    "id": 2,
+    "titulo": "The Last of Us Part II",
+    "genero": "Aventura",
+    "descripcion": "Ellie continúa su historia en un mundo postapocalíptico lleno de peligros.",
+    "imagen": "https://example.com/imagenes/tlou2.jpg",
+    "descargas": 980
+  },
+  {
+    "id": 3,
+    "titulo": "Spider-Man: Miles Morales",
+    "genero": "Acción",
+    "descripcion": "Miles se convierte en el nuevo Spider-Man mientras protege su ciudad.",
+    "imagen": "https://example.com/imagenes/spiderman.jpg",
+    "descargas": 860
+  }
+]
