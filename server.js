@@ -31,8 +31,6 @@ app.get('/juegos', (req, res) => {
     } catch (parseErr) {
       res.status(500).json({ error: 'Error al parsear juegos.json' });
     }
-  });
-});
 const jwt = require('jsonwebtoken');
 
 // Ruta POST para login
