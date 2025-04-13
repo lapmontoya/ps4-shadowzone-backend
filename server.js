@@ -1,24 +1,49 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(cors());
+const SECRET_KEY = 'shadowzone_secret_key';
+
 app.use(express.json());
 
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
+// 🔧 CONFIGURACIÓN CORS CORRECTA
+app.use(cors({
+  origin: 'https://ps4-shadow-zone.netlify.app', // tu frontend en Netlify
+  credentials: true
+}));
 
-  if (username === 'admin' && password === 'shadowzone2025') {
-    const token = jwt.sign({ user: 'admin' }, 'secreto_ultra_seguro', { expiresIn: '1h' });
+// Ruta de login con JWT
+app.post('/api/login', (req, res) => {
+  const { usuario, contraseña } = req.body;
+
+  if (usuario === 'admin' && contraseña === 'shadowzone2025') {
+    const token = jwt.sign({ usuario }, SECRET_KEY, { expiresIn: '2h' });
     res.json({ token });
   } else {
-    res.status(401).json({ message: 'Credenciales inválidas' });
+    res.status(401).json({ mensaje: 'Credenciales inválidas' });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+// Middleware de autenticación
+function verificarToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ mensaje: 'Token no proporcionado' });
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) return res.status(403).json({ mensaje: 'Token inválido' });
+    req.user = user;
+    next();
+  });
+}
+
+// Ejemplo de ruta protegida
+app.get('/api/protegido', verificarToken, (req, res) => {
+  res.json({ mensaje: 'Acceso concedido a ruta protegida', user: req.user });
+});
+
+app.listen(port, () => {
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });
