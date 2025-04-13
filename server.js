@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -7,17 +10,12 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Ruta principal
 app.get('/', (req, res) => {
   res.send('PS4 Shadowzone Backend funcionando correctamente.');
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
-const fs = require('fs');
-const path = require('path');
-
-// Ruta GET para devolver el archivo juegos.json
+// Ruta para devolver juegos
 app.get('/juegos', (req, res) => {
   const archivoPath = path.join(__dirname, 'juegos.json');
 
@@ -31,10 +29,11 @@ app.get('/juegos', (req, res) => {
     } catch (parseErr) {
       res.status(500).json({ error: 'Error al parsear juegos.json' });
     }
-const jwt = require('jsonwebtoken');
+  });
+});
 
-// Ruta POST para login
-aplicación.post('/api/login', (req, res) => {
+// Ruta POST para login con JWT
+app.post('/api/login', (req, res) => {
   const { usuario, contraseña } = req.body;
 
   if (usuario === 'admin' && contraseña === 'shadowzone2025') {
@@ -44,4 +43,9 @@ aplicación.post('/api/login', (req, res) => {
     res.status(401).json({ mensaje: 'Credenciales incorrectas' });
   }
 });
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
+
 
