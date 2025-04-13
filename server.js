@@ -33,3 +33,17 @@ app.get('/juegos', (req, res) => {
     }
   });
 });
+const jwt = require('jsonwebtoken');
+
+// Ruta POST para login
+aplicación.post('/api/login', (req, res) => {
+  const { usuario, contraseña } = req.body;
+
+  if (usuario === 'admin' && contraseña === 'shadowzone2025') {
+    const token = jwt.sign({ usuario: 'admin' }, 'secretoSuperSecreto', { expiresIn: '2h' });
+    res.json({ token });
+  } else {
+    res.status(401).json({ mensaje: 'Credenciales incorrectas' });
+  }
+});
+
