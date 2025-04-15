@@ -16,9 +16,9 @@ app.use(cors({
 
 // Ruta de login con JWT
 app.post('/api/login', (req, res) => {
-  const { usuario, contraseña } = req.body;
+  const { usuario, contrasena } = req.body;
 
-  if (usuario === 'admin' && contraseña === 'shadowzone2025') {
+  if (usuario === 'admin' && contrasena === 'shadowzone2025') {
     const token = jwt.sign({ usuario }, SECRET_KEY, { expiresIn: '2h' });
     res.json({ token });
   } else {
