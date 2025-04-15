@@ -1,3 +1,3 @@
 #!/bin/bash
 npm install
-node src/server.js
+node servidor.js
